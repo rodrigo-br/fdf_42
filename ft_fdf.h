@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/14 22:57:39 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/07/14 23:18:53 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/07/14 23:40:14 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 
 # include "printf/ft_printf.h"
 # include <stdlib.h>
+# include <mlx.h>
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
 # endif
