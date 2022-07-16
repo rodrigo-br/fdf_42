@@ -17,6 +17,8 @@
 # include <stdlib.h>
 # include <mlx.h>
 
+# define ESC 65307
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
 # endif

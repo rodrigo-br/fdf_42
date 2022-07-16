@@ -1,61 +1,81 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   ft_fdf.c                                           :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/07/15 00:10:21 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/07/15 01:47:09 by ralves-b         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+#include <mlx.h>
+#include <limits.h>
+#include "ft_fdf.h"
 
-#include "mlx.h"
+typedef struct	s_data {
+	void	*mlx;
+	void	*win;
+	void	*img;
+	char	*addr;
+	int		bits_per_pixel;
+	int		line_length;
+	int		endian;
+}	t_data;
 
-int main (void)
+int	key_hook(int keycode, t_data *mlx)
 {
-	void	*mlx_ptr;
-	void	*win_ptr;
+	if (keycode == ESC)
+	{
+		mlx_destroy_image(mlx->mlx, mlx->img);
+		mlx_destroy_window(mlx->mlx, mlx->win);
+		mlx_destroy_display(mlx->mlx);
+		free(mlx->mlx);
+		exit(0);
+	}
+	else
+		ft_printf("a tecla apertada foi %d\n", keycode);
+	return (0);
+}
+
+
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+{
+	char	*dst;
+
+	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
+	*(unsigned int*)dst = color;
+}
+
+int	main(void)
+{
+	t_data	fdf;
 	int		x;
 	int		y;
-	
+
 	x = 50;
 	y = 250;
-	mlx_ptr = mlx_init();
-	win_ptr = mlx_new_window(mlx_ptr, 300, 300, "capybaras do like banana");	
+	fdf.mlx = mlx_init();
+	fdf.win = mlx_new_window(fdf.mlx, 300, 300, "Camilla s2");
+	fdf.img = mlx_new_image(fdf.mlx, 300, 300);
+	fdf.addr = mlx_get_data_addr(fdf.img, &fdf.bits_per_pixel, \
+&fdf.line_length, &fdf.endian);
 	while (y != 50)
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF);
-		if (y < 100 && y > 75)
-		{
-			mlx_pixel_put(mlx_ptr, win_ptr, x + 50, y, 0xFFFFFF);
-			mlx_pixel_put(mlx_ptr, win_ptr, x + 80, y, 0xFFFFFF);
-			mlx_pixel_put(mlx_ptr, win_ptr, x + 120, y, 0xFFFFFF);
-			mlx_pixel_put(mlx_ptr, win_ptr, x + 150, y, 0xFFFFFF);
-		}
+		my_mlx_pixel_put(&fdf, x, y, 0xFFFFFF);
 		y--;
 	}
 	while (x != 250)
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF);
+		my_mlx_pixel_put(&fdf, x, y, 0xFFFFFF);
 		if (x > 100 && x < 130 || x > 170 && x < 200)
 		{
-			mlx_pixel_put(mlx_ptr, win_ptr, x, y + 25, 0xFFFFFF);
-			mlx_pixel_put(mlx_ptr, win_ptr, x, y + 50, 0xFFFFFF);
+			my_mlx_pixel_put(&fdf, x, y + 50, 0xFFFFFF);
 		}
 		if (x > 80 && x < 220)
-			mlx_pixel_put(mlx_ptr, win_ptr, x, y + 150, 0xFFFFFF);
+			my_mlx_pixel_put(&fdf, x, y + 150, 0xFFFFFF);
 		x++;
 	}
 	while (y != 250)
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF);
+		my_mlx_pixel_put(&fdf, x, y, 0xFFFFFF);
 		y++;
 	}
 	while (x != 50)
 	{
-		mlx_pixel_put(mlx_ptr, win_ptr, x, y, 0xFFFFFF);
+		my_mlx_pixel_put(&fdf, x, y, 0xFFFFFF);
 		x--;
 	}
-	mlx_loop(mlx_ptr);
+	mlx_put_image_to_window(fdf.mlx, fdf.win, fdf.img, 0, 0);
+	mlx_key_hook(fdf.win, key_hook, &fdf);
+	mlx_loop(fdf.mlx);
 }
