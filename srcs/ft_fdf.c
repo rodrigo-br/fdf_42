@@ -1,8 +1,9 @@
 #include <mlx.h>
 #include <limits.h>
-#include "ft_fdf.h"
+#include "../ft_fdf.h"
 
-typedef struct	s_data {
+typedef struct	s_data
+{
 	void	*mlx;
 	void	*win;
 	void	*img;
@@ -26,7 +27,6 @@ int	key_hook(int keycode, t_data *mlx)
 		ft_printf("a tecla apertada foi %d\n", keycode);
 	return (0);
 }
-
 
 void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {

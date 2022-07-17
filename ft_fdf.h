@@ -16,6 +16,7 @@
 # include "printf/ft_printf.h"
 # include <stdlib.h>
 # include <mlx.h>
+# include <fcntl.h>
 
 # define ESC 65307
 
@@ -24,5 +25,6 @@
 # endif
 
 char	*get_next_line(int fd);
+int     read_map(int fd, char *arg_1);
 
 #endif

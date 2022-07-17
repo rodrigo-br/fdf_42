@@ -1,8 +1,8 @@
-SRC		=	ft_fdf.c
+SRC		=	ft_fdf.c find_axis.c
 
 H_SRC	=	ft_fdf.h
 
-OBJS	=	${SRC:.c=.o}
+OBJS	=	$(addprefix srcs/, ${SRC:.c=.o})
 
 NAME	=	fdf
 
