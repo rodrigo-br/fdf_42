@@ -20,11 +20,27 @@
 
 # define ESC 65307
 
+typedef struct	s_data
+{
+    int     **matrix_boladona;
+	int		bits_per_pixel;
+	int		line_length;
+    int     y_columns;
+    int     x_lines;
+	int		endian;
+	char	*addr;
+	void	*mlx;
+	void	*win;
+	void	*img;
+}	t_data;
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
 # endif
 
+int     **read_map(int fd, char *arg_1, t_data *data);
 char	*get_next_line(int fd);
-int     **read_map(int fd, char *arg_1, int *x_lines, int *y_columns);
+int     ft_n_max(int x, int y);
+int     ft_abs(int n);
 
 #endif

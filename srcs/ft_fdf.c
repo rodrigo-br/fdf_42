@@ -2,17 +2,6 @@
 #include <limits.h>
 #include "../ft_fdf.h"
 
-typedef struct	s_data
-{
-	void	*mlx;
-	void	*win;
-	void	*img;
-	char	*addr;
-	int		bits_per_pixel;
-	int		line_length;
-	int		endian;
-}	t_data;
-
 int	key_hook(int keycode, t_data *mlx)
 {
 	if (keycode == ESC)
@@ -57,7 +46,7 @@ int	main(void)
 	while (x != 250)
 	{
 		my_mlx_pixel_put(&fdf, x, y, 0xFFFFFF);
-		if (x > 100 && x < 130 || x > 170 && x < 200)
+		if ((x > 100 && x < 130) || (x > 170 && x < 200))
 		{
 			my_mlx_pixel_put(&fdf, x, y + 50, 0xFFFFFF);
 		}
