@@ -1,6 +1,6 @@
 #include "../ft_fdf.h"
 
-void    faz_matrix_boladona(int fd, char *arg_1, int y_columns, int x_lines)
+int **faz_matrix_boladona(int fd, char *arg_1, int y_columns, int x_lines)
 {
     int     **matrix;
     char    **temp_matrix;
@@ -15,46 +15,51 @@ void    faz_matrix_boladona(int fd, char *arg_1, int y_columns, int x_lines)
     {
         mapping = get_next_line(fd);
         temp_matrix = ft_split(mapping, ' ');
+        free(mapping);
         temp_i = 0;
         matrix[i] = (int *)malloc(sizeof(int) * y_columns);
         while (temp_i < y_columns)
         {
             matrix[i][temp_i] = ft_atoi(temp_matrix[temp_i]);
-            ft_printf("%3d", matrix[i][temp_i]);
+            free(temp_matrix[temp_i]);
             temp_i++;
         }
         free(temp_matrix);
-        ft_printf("\n");
         i++;
     }
+    mapping = get_next_line(fd);
+    free(mapping);
     close(fd);
+    return(matrix);
 }
 
-int read_map(int fd, char *arg_1)
+int **read_map(int fd, char *arg_1, int *x_lines, int *y_columns)
 {
-    int     count_lines;
     char    *line;
-    int     count_columns;
     char    **matrix;
+    int     i;
 
-    count_lines = -1;
-    count_columns = 0;
+    i = 0;
     line = get_next_line(fd);
     if (line)
     {
-        count_lines++;
+        *x_lines += 1;
         matrix = ft_split(line, ' ');
-        while (*matrix++)
-            count_columns++;
+        while (matrix[i])
+        {
+            *y_columns += 1;
+            free(matrix[i]);
+            i++;
+        }
         free(line);
+        free(matrix);
     }
-    while (line && count_lines >= 0)
+    while (line && *x_lines >= 0)
     {
-        count_lines++;
+        *x_lines += 1;
         line = get_next_line(fd);
         free(line);
     }
-    faz_matrix_boladona(fd, arg_1, count_columns, count_lines);
     close(fd);
-    return (0);
+    return (faz_matrix_boladona(fd, arg_1, *y_columns, *x_lines));
 }
