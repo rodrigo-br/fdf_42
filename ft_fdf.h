@@ -25,6 +25,6 @@
 # endif
 
 char	*get_next_line(int fd);
-int     read_map(int fd, char *arg_1);
+int     **read_map(int fd, char *arg_1, int *x_lines, int *y_columns);
 
 #endif
