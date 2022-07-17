@@ -1,30 +1,30 @@
 #include "../ft_fdf.h"
 
+void    read_size(t_data *data)
+{
+    int max;
+
+    max = ft_n_max(data->x_lines, data->y_columns);
+    data->zoom = 10;
+    while ((1000 / max) < data->zoom)
+        data->zoom -= 2;
+    data->start = 1;
+    // data->start = (1000 / 2) - (1000 / data->zoom);
+    // while ((data->start + (data->zoom * max)) > 1000)
+    //     data->start -= 2;
+}
+
 int main (int *argc, char **argv)
 {
     t_data  data;
     int     fd;
-    int     x;
-    int     y;
 
     (void)argc;
-    x = 0;
     data.x_lines = -1;
     data.y_columns = 0;
     fd = open(argv[1], O_RDONLY);
     data.matrix_boladona = read_map(fd, argv[1], &data);
-    while(x < data.x_lines)
-    {
-        y = 0;
-        while (y < data.y_columns)
-        {
-            ft_printf("%3d", data.matrix_boladona[x][y]);
-            y++;
-        }
-        free(data.matrix_boladona[x]);
-        ft_printf("\n");
-        x++;
-    }
-    free(data.matrix_boladona);
+    read_size(&data);
+    fdf(&data);
     return (0);
 }

@@ -28,19 +28,33 @@ typedef struct	s_data
     int     y_columns;
     int     x_lines;
 	int		endian;
+    int     start;
+    int     zoom;
 	char	*addr;
 	void	*mlx;
 	void	*win;
 	void	*img;
 }	t_data;
 
+typedef struct s_bres
+{
+    int p1[2];
+    int p2[2];
+    int x[2];
+    int y[2];
+    int z;
+}   t_bres;
+
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 4096
 # endif
 
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color);
 int     **read_map(int fd, char *arg_1, t_data *data);
 char	*get_next_line(int fd);
 int     ft_n_max(int x, int y);
+void    put_points(t_data *data);
+int     fdf(t_data *data);
 int     ft_abs(int n);
 
 #endif

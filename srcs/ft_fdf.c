@@ -4,12 +4,25 @@
 
 int	key_hook(int keycode, t_data *mlx)
 {
+	int	x;
+	int y;
+
+	x = 0;
 	if (keycode == ESC)
 	{
 		mlx_destroy_image(mlx->mlx, mlx->img);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
 		free(mlx->mlx);
+		while(x < mlx->x_lines)
+		{
+			y = 0;
+			while (y < mlx->y_columns)
+				y++;
+			free(mlx->matrix_boladona[x]);
+			x++;
+		}
+		free(mlx->matrix_boladona);
 		exit(0);
 	}
 	else
@@ -17,7 +30,7 @@ int	key_hook(int keycode, t_data *mlx)
 	return (0);
 }
 
-void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
+void	my_mlx_pixel_put(t_data *data, int y, int x, int color)
 {
 	char	*dst;
 
@@ -25,46 +38,15 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
-int	main(void)
+int	fdf(t_data *data)
 {
-	t_data	fdf;
-	int		x;
-	int		y;
-
-	x = 50;
-	y = 250;
-	fdf.mlx = mlx_init();
-	fdf.win = mlx_new_window(fdf.mlx, 300, 300, "Camilla s2");
-	fdf.img = mlx_new_image(fdf.mlx, 300, 300);
-	fdf.addr = mlx_get_data_addr(fdf.img, &fdf.bits_per_pixel, \
-&fdf.line_length, &fdf.endian);
-	while (y != 50)
-	{
-		my_mlx_pixel_put(&fdf, x, y, 0xFFFFFF);
-		y--;
-	}
-	while (x != 250)
-	{
-		my_mlx_pixel_put(&fdf, x, y, 0xFFFFFF);
-		if ((x > 100 && x < 130) || (x > 170 && x < 200))
-		{
-			my_mlx_pixel_put(&fdf, x, y + 50, 0xFFFFFF);
-		}
-		if (x > 80 && x < 220)
-			my_mlx_pixel_put(&fdf, x, y + 150, 0xFFFFFF);
-		x++;
-	}
-	while (y != 250)
-	{
-		my_mlx_pixel_put(&fdf, x, y, 0xFFFFFF);
-		y++;
-	}
-	while (x != 50)
-	{
-		my_mlx_pixel_put(&fdf, x, y, 0xFFFFFF);
-		x--;
-	}
-	mlx_put_image_to_window(fdf.mlx, fdf.win, fdf.img, 0, 0);
-	mlx_key_hook(fdf.win, key_hook, &fdf);
-	mlx_loop(fdf.mlx);
+	data->mlx = mlx_init();
+	data->win = mlx_new_window(data->mlx, 1000, 1000, "Socorro!");
+	data->img = mlx_new_image(data->mlx, 1000, 1000);
+	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
+&data->line_length, &data->endian);
+	put_points(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	mlx_key_hook(data->win, key_hook, data);
+	mlx_loop(data->mlx);
 }
