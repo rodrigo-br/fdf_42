@@ -26,8 +26,8 @@ typedef struct	s_data
     int     **matrix_boladona;
 	int		bits_per_pixel;
 	int		line_length;
-    int     y_columns;
-    int     x_lines;
+    int     x_columns;
+    int     y_lines;
 	int		endian;
     int     start;
     int     zoom;
@@ -39,11 +39,11 @@ typedef struct	s_data
 
 typedef struct s_bres
 {
-    double     x[2];
-    double     y[2];
-    int     delta_x;
-    int     delta_y;
-    int     z;
+    float      x[2];
+    float      y[2];
+    float      delta_x;
+    float      delta_y;
+    int        z[2];
 }   t_bres;
 
 # ifndef BUFFER_SIZE

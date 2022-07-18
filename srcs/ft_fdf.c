@@ -7,20 +7,16 @@ int	key_hook(int keycode, t_data *mlx)
 	int	x;
 	int y;
 
-	x = 0;
 	if (keycode == ESC)
 	{
 		mlx_destroy_image(mlx->mlx, mlx->img);
 		mlx_destroy_window(mlx->mlx, mlx->win);
 		mlx_destroy_display(mlx->mlx);
 		free(mlx->mlx);
-		while(x < mlx->x_lines)
+		while(y < mlx->y_lines)
 		{
-			y = 0;
-			while (y < mlx->y_columns)
-				y++;
-			free(mlx->matrix_boladona[x]);
-			x++;
+			free(mlx->matrix_boladona[y]);
+			y++;
 		}
 		free(mlx->matrix_boladona);
 		exit(0);
@@ -30,7 +26,7 @@ int	key_hook(int keycode, t_data *mlx)
 	return (0);
 }
 
-void	my_mlx_pixel_put(t_data *data, int y, int x, int color)
+void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
