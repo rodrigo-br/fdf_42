@@ -17,6 +17,7 @@
 # include <stdlib.h>
 # include <mlx.h>
 # include <fcntl.h>
+# include <math.h>
 
 # define ESC 65307
 
@@ -38,11 +39,11 @@ typedef struct	s_data
 
 typedef struct s_bres
 {
-    int p1[2];
-    int p2[2];
-    int x[2];
-    int y[2];
-    int z;
+    double     x[2];
+    double     y[2];
+    int     delta_x;
+    int     delta_y;
+    int     z;
 }   t_bres;
 
 # ifndef BUFFER_SIZE
