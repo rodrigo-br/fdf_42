@@ -51,10 +51,10 @@ typedef struct	s_data
 
 typedef struct s_bres
 {
-    float      x[2];
-    float      y[2];
     float      delta_x;
     float      delta_y;
+    float      x[2];
+    float      y[2];
     int        z[2];
 }   t_bres;
 

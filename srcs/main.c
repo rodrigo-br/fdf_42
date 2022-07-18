@@ -22,7 +22,7 @@ int main (int *argc, char **argv)
     (void)argc;
     data.x_axis = 10;
     data.y_axis = 10;
-    data.z = 0;
+    data.z = 1;
     data.angle = 0.8;
     data.y_lines = -1;
     data.x_columns = 0;

@@ -8,11 +8,11 @@ void    add_3d(t_bres *bres, t_data *data)
     float       temp_y;
 
     temp_x = (bres->x[0] - bres->y[0]) * cos(data->angle);
-    temp_y = (bres->x[0] + bres->y[0]) * sin(data->angle) - (bres->z[0] + data->z);
+    temp_y = (bres->x[0] + bres->y[0]) * sin(data->angle) - (bres->z[0] * data->z);
     bres->x[0] = temp_x + 100;
     bres->y[0] = temp_y + 100;
     temp_x = (bres->x[1] - bres->y[1]) * cos(data->angle);
-    temp_y = (bres->x[1] + bres->y[1]) * sin(data->angle) - (bres->z[1] - data->z);
+    temp_y = (bres->x[1] + bres->y[1]) * sin(data->angle) - (bres->z[1] * data->z);
     bres->x[1] = temp_x + 100;
     bres->y[1] = temp_y + 100;
 }
