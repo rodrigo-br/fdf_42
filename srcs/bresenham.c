@@ -8,12 +8,12 @@ void    add_3d(t_bres *bres)
 
     temp_x = (bres->x[0] - bres->y[0]) * cos(0.8);
     temp_y = (bres->x[0] + bres->y[0]) * sin(0.8) - bres->z[0];
-    bres->x[0] = temp_x + 300;
-    bres->y[0] = temp_y + 300;
+    bres->x[0] = temp_x + 150;
+    bres->y[0] = temp_y + 150;
     temp_x = (bres->x[1] - bres->y[1]) * cos(0.8);
     temp_y = (bres->x[1] + bres->y[1]) * sin(0.8) - bres->z[1];
-    bres->x[1] = temp_x + 300;
-    bres->y[1] = temp_y + 300;
+    bres->x[1] = temp_x + 150;
+    bres->y[1] = temp_y + 150;
 }
 
 int find_color(int pos, int pos_1)
