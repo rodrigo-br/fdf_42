@@ -1,28 +1,53 @@
 #include <mlx.h>
-#include <limits.h>
 #include "../ft_fdf.h"
 
-int	key_hook(int keycode, t_data *mlx)
+void	end_program(t_data *mlx)
 {
-	int	x;
 	int y;
 
-	if (keycode == ESC)
+	mlx_destroy_image(mlx->mlx, mlx->img);
+	mlx_destroy_window(mlx->mlx, mlx->win);
+	mlx_destroy_display(mlx->mlx);
+	free(mlx->mlx);
+	while(y < mlx->y_lines)
 	{
-		mlx_destroy_image(mlx->mlx, mlx->img);
-		mlx_destroy_window(mlx->mlx, mlx->win);
-		mlx_destroy_display(mlx->mlx);
-		free(mlx->mlx);
-		while(y < mlx->y_lines)
-		{
-			free(mlx->matrix_boladona[y]);
-			y++;
-		}
-		free(mlx->matrix_boladona);
-		exit(0);
+		free(mlx->matrix_boladona[y]);
+		y++;
 	}
+	free(mlx->matrix_boladona);
+	exit(0);
+}
+int	key_hook(int keycode, t_data *mlx)
+{
+	if (keycode == ESC)
+		end_program(mlx);
+	else if (keycode == UP)
+		mlx->y_axis -= 10;
+	else if (keycode == DOWN)
+		mlx->y_axis += 10;
+	else if (keycode == LEFT)
+		mlx->x_axis -= 10;
+	else if (keycode == RIGHT)
+		mlx->x_axis += 10;
+	else if (keycode == W_KEY)
+		mlx->angle += 0.1;
+	else if (keycode == S_KEY)
+		mlx->angle -= 0.1;
+	else if (keycode == 65451)
+		mlx->zoom += 1;
+	else if (keycode == 65453 && mlx->zoom > 1)
+		mlx->zoom -= 1;
+	else if (keycode == 101)
+		mlx->z += 1;
+	else if (keycode == 113)
+		mlx->z -= 1;
 	else
 		ft_printf("a tecla apertada foi %d\n", keycode);
+	mlx_destroy_image(mlx->mlx, mlx->img);
+	mlx_clear_window(mlx->mlx, mlx->win);
+	mlx->img = mlx_new_image(mlx->mlx, 1000, 1000);
+	put_points(mlx);
+	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
 	return (0);
 }
 
@@ -45,4 +70,5 @@ int	fdf(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	mlx_key_hook(data->win, key_hook, data);
 	mlx_loop(data->mlx);
+	return (0);
 }

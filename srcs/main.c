@@ -20,6 +20,10 @@ int main (int *argc, char **argv)
     int     fd;
 
     (void)argc;
+    data.x_axis = 10;
+    data.y_axis = 10;
+    data.z = 0;
+    data.angle = 0.8;
     data.y_lines = -1;
     data.x_columns = 0;
     fd = open(argv[1], O_RDONLY);

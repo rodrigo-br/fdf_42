@@ -18,12 +18,24 @@
 # include <mlx.h>
 # include <fcntl.h>
 # include <math.h>
+# include <stdio.h>
+# include <limits.h>
 
-# define ESC 65307
+# define ESC    65307
+# define LEFT   65361
+# define UP     65362
+# define RIGHT  65363
+# define DOWN   65364
+# define W_KEY  119
+# define S_KEY  115
 
 typedef struct	s_data
 {
     int     **matrix_boladona;
+    int     x_axis;
+    int     y_axis;
+    double  angle;
+    int     z;
 	int		bits_per_pixel;
 	int		line_length;
     int     x_columns;

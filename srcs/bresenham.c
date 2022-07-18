@@ -1,19 +1,20 @@
 #include "../ft_fdf.h"
 #include <stdio.h>
+#include <math.h>
 
-void    add_3d(t_bres *bres)
+void    add_3d(t_bres *bres, t_data *data)
 {
-    float   temp_x;
-    float   temp_y;
+    float       temp_x;
+    float       temp_y;
 
-    temp_x = (bres->x[0] - bres->y[0]) * cos(0.8);
-    temp_y = (bres->x[0] + bres->y[0]) * sin(0.8) - bres->z[0];
-    bres->x[0] = temp_x + 150;
-    bres->y[0] = temp_y + 150;
-    temp_x = (bres->x[1] - bres->y[1]) * cos(0.8);
-    temp_y = (bres->x[1] + bres->y[1]) * sin(0.8) - bres->z[1];
-    bres->x[1] = temp_x + 150;
-    bres->y[1] = temp_y + 150;
+    temp_x = (bres->x[0] - bres->y[0]) * cos(data->angle);
+    temp_y = (bres->x[0] + bres->y[0]) * sin(data->angle) - (bres->z[0] + data->z);
+    bres->x[0] = temp_x + 100;
+    bres->y[0] = temp_y + 100;
+    temp_x = (bres->x[1] - bres->y[1]) * cos(data->angle);
+    temp_y = (bres->x[1] + bres->y[1]) * sin(data->angle) - (bres->z[1] - data->z);
+    bres->x[1] = temp_x + 100;
+    bres->y[1] = temp_y + 100;
 }
 
 int find_color(int pos, int pos_1)
@@ -36,7 +37,11 @@ void    bresenham(t_data *data, t_bres bres)
     bres.x[1] *= data->zoom;
     bres.y[0] *= data->zoom;
     bres.y[1] *= data->zoom;
-    add_3d(&bres);
+    add_3d(&bres, data);
+    bres.x[0] += data->x_axis;
+    bres.x[1] += data->x_axis;
+    bres.y[0] += data->y_axis;
+    bres.y[1] += data->y_axis;
     bres.delta_x = bres.x[1] - bres.x[0];
     bres.delta_y = bres.y[1] - bres.y[0];
     steps = (ft_n_max(fabs(bres.delta_x), fabs(bres.delta_y)));
@@ -49,8 +54,6 @@ void    bresenham(t_data *data, t_bres bres)
         bres.y[0] += bres.delta_y;
     }
 }
-
-
 
 void    put_points(t_data *data)
 {
