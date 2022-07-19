@@ -1,10 +1,11 @@
 #include <mlx.h>
 #include "../ft_fdf.h"
 
-void	end_program(t_data *mlx)
+int	end_program(t_data *mlx)
 {
 	int y;
 
+	y = 0;
 	mlx_destroy_image(mlx->mlx, mlx->img);
 	mlx_destroy_window(mlx->mlx, mlx->win);
 	mlx_destroy_display(mlx->mlx);
@@ -16,9 +17,22 @@ void	end_program(t_data *mlx)
 	}
 	free(mlx->matrix_boladona);
 	exit(0);
+	return (0);
 }
+
+static int	pimba(t_data *data)
+{
+	mlx_destroy_image(data->mlx, data->img);
+	mlx_clear_window(data->mlx, data->win);
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	put_points(data);
+	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	return (0);
+}
+
 int	key_hook(int keycode, t_data *mlx)
 {
+	ft_printf("keycode = %d\n", keycode);
 	if (keycode == ESC)
 		end_program(mlx);
 	else if (keycode == UP)
@@ -33,21 +47,15 @@ int	key_hook(int keycode, t_data *mlx)
 		mlx->angle += 0.1;
 	else if (keycode == S_KEY)
 		mlx->angle -= 0.1;
-	else if (keycode == 65451)
+	else if (keycode == PLUS_KEY)
 		mlx->zoom += 1;
-	else if (keycode == 65453 && mlx->zoom > 1)
+	else if (keycode == MINUS_KEY && mlx->zoom > 1)
 		mlx->zoom -= 1;
-	else if (keycode == 101)
+	else if (keycode == E_KEY)
 		mlx->z += 1;
-	else if (keycode == 113)
+	else if (keycode == Q_KEY)
 		mlx->z -= 1;
-	else
-		ft_printf("a tecla apertada foi %d\n", keycode);
-	mlx_destroy_image(mlx->mlx, mlx->img);
-	mlx_clear_window(mlx->mlx, mlx->win);
-	mlx->img = mlx_new_image(mlx->mlx, 1000, 1000);
-	put_points(mlx);
-	mlx_put_image_to_window(mlx->mlx, mlx->win, mlx->img, 0, 0);
+	pimba(mlx);
 	return (0);
 }
 
@@ -55,6 +63,8 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
+	if (y > HEIGHT || x > WIDTH || x < 0 || y < 0)
+		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
 }
@@ -62,13 +72,15 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 int	fdf(t_data *data)
 {
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, 1000, 1000, "Socorro!");
-	data->img = mlx_new_image(data->mlx, 1000, 1000);
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "y r u seg faulting me?");
+	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 &data->line_length, &data->endian);
 	put_points(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	mlx_key_hook(data->win, key_hook, data);
+	mlx_hook(data->win, 17, 1L<<2, end_program, data);
+	mlx_hook(data->win, 07, 1L<<04, pimba, data);
 	mlx_loop(data->mlx);
 	return (0);
 }

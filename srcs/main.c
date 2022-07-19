@@ -5,9 +5,7 @@ void    read_size(t_data *data)
     int max;
 
     max = ft_n_max(data->y_lines, data->x_columns);
-    data->zoom = 10;
-    while ((1000 / max) < data->zoom)
-        data->zoom -= 2;
+    data->zoom = 2;
     // data->start = 1;
     // data->start = (1000 / 2) - (1000 / data->zoom);
     // while ((data->start + (data->zoom * max)) > 1000)
