@@ -23,7 +23,6 @@ int	end_program(t_data *mlx)
 static int	pimba(t_data *data)
 {
 	mlx_destroy_image(data->mlx, data->img);
-	mlx_clear_window(data->mlx, data->win);
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	put_points(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
@@ -36,13 +35,13 @@ int	key_hook(int keycode, t_data *mlx)
 	if (keycode == ESC)
 		end_program(mlx);
 	else if (keycode == UP)
-		mlx->y_axis -= 10;
+		mlx->y_axis += 50;
 	else if (keycode == DOWN)
-		mlx->y_axis += 10;
+		mlx->y_axis -= 50;
 	else if (keycode == LEFT)
-		mlx->x_axis -= 10;
+		mlx->x_axis -= 50;
 	else if (keycode == RIGHT)
-		mlx->x_axis += 10;
+		mlx->x_axis += 50;
 	else if (keycode == W_KEY)
 		mlx->angle += 0.1;
 	else if (keycode == S_KEY)
@@ -72,7 +71,7 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 int	fdf(t_data *data)
 {
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "y r u seg faulting me?");
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "y r u so slow?");
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 &data->line_length, &data->endian);
