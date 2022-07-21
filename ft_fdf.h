@@ -26,6 +26,7 @@
 # define UP         65362
 # define RIGHT      65363
 # define DOWN       65364
+# define SPACE      32
 # define W_KEY      119
 # define S_KEY      115
 # define E_KEY      101
@@ -36,10 +37,17 @@
 #  define BUFFER_SIZE 4096
 # define WIDTH      1420
 # define HEIGHT     1024
+# define KEY_PRESS_EVENT    02
+# define DESTROY_EVENT      17
+# define ENTER_EVENT        07
+# define KEY_PRESS_MASK     1L<<0
+# define DESTROY_MASK       1L<<2
+# define ENTER_WINDOW_MASK  1L<<04
 # endif
 
 typedef struct	s_data
 {
+    int     projection;
     int     **matrix_boladona;
     int     x_axis;
     int     y_axis;

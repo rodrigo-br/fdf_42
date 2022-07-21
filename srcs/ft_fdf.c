@@ -39,9 +39,9 @@ int	key_hook(int keycode, t_data *mlx)
 	else if (keycode == DOWN)
 		mlx->y_axis -= 50;
 	else if (keycode == LEFT)
-		mlx->x_axis -= 50;
-	else if (keycode == RIGHT)
 		mlx->x_axis += 50;
+	else if (keycode == RIGHT)
+		mlx->x_axis -= 50;
 	else if (keycode == W_KEY)
 		mlx->angle += 0.1;
 	else if (keycode == S_KEY)
@@ -54,6 +54,8 @@ int	key_hook(int keycode, t_data *mlx)
 		mlx->z += 1;
 	else if (keycode == Q_KEY)
 		mlx->z -= 1;
+	else if (keycode == SPACE)
+		mlx->projection += 1;
 	pimba(mlx);
 	return (0);
 }
@@ -71,15 +73,16 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 int	fdf(t_data *data)
 {
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "y r u so slow?");
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "y mars leak?");
 	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 &data->line_length, &data->endian);
 	put_points(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	mlx_hook(data->win, KEY_PRESS_EVENT, KEY_PRESS_MASK, key_hook, data);
 	mlx_key_hook(data->win, key_hook, data);
-	mlx_hook(data->win, 17, 1L<<2, end_program, data);
-	mlx_hook(data->win, 07, 1L<<04, pimba, data);
+	mlx_hook(data->win, DESTROY_EVENT, DESTROY_MASK, end_program, data);
+	mlx_hook(data->win, ENTER_EVENT, ENTER_WINDOW_MASK, pimba, data);
 	mlx_loop(data->mlx);
 	return (0);
 }

@@ -1,4 +1,4 @@
-SRC		=	ft_fdf.c find_axis.c bresenham.c ft_n_max.c ft_abs.c
+SRC		=	ft_fdf.c find_axis.c bresenham.c ft_n_max.c
 
 H_SRC	=	ft_fdf.h
 

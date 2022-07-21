@@ -2,6 +2,16 @@
 #include <stdio.h>
 #include <math.h>
 
+int find_color(int pos, int pos_1)
+{
+    if (pos > 0 || pos_1 > 0)
+        return (0xFF0000);
+    else if (pos < 0 || pos_1 < 0)
+        return (0x0000FF);
+    else
+        return (0xFFFFFF);
+}
+
 void    add_3d(t_bres *bres, t_data *data)
 {
     float       temp_x;
@@ -19,16 +29,6 @@ void    add_3d(t_bres *bres, t_data *data)
     bres->y[1] = temp_y;
 }
 
-int find_color(int pos, int pos_1)
-{
-    if (pos > 0 || pos_1 > 0)
-        return (0xFF0000);
-    else if (pos < 0 || pos_1 < 0)
-        return (0x0000FF);
-    else
-        return (0xFFFFFF);
-}
-
 void    bresenham(t_data *data, t_bres bres)
 {
     int     steps;
@@ -39,11 +39,12 @@ void    bresenham(t_data *data, t_bres bres)
     bres.x[1] *= data->zoom;
     bres.y[0] *= data->zoom;
     bres.y[1] *= data->zoom;
-    add_3d(&bres, data);
-    bres.x[0] += data->x_axis;
-    bres.x[1] += data->x_axis;
-    bres.y[0] += data->y_axis;
-    bres.y[1] += data->y_axis;
+    if (data->projection % 2 == 0)
+        add_3d(&bres, data);
+    bres.x[0] += data->x_axis + data->start;
+    bres.x[1] += data->x_axis + data->start;
+    bres.y[0] += data->y_axis + data->start;
+    bres.y[1] += data->y_axis + data->start;
     bres.delta_x = bres.x[1] - bres.x[0];
     bres.delta_y = bres.y[1] - bres.y[0];
     steps = (ft_n_max(fabs(bres.delta_x), fabs(bres.delta_y)));
