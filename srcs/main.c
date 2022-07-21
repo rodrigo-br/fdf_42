@@ -1,5 +1,15 @@
 #include "../ft_fdf.h"
 
+static int  exit_error(int erro)
+{
+    if (erro == 1)
+        ft_printf("Número de argumentos inválido.\n");
+    else if (erro == 2)
+        ft_printf("Arquivo inválido.\n");
+    else
+        ft_printf("Mapa inválido.\n");
+    return (-1);
+}
 void    read_size(t_data *data)
 {
     int max;
@@ -18,10 +28,7 @@ int main (int argc, char **argv)
     int     fd;
 
     if (argc != 2)
-    {
-        ft_printf("Número de argumentos inválido.\n");
-        return (-1);
-    }
+        return (exit_error(1));
     data.x_axis = 10;
     data.y_axis = 10;
     data.z = 1;
@@ -30,12 +37,11 @@ int main (int argc, char **argv)
     data.x_columns = 0;
     data.projection = 0;
     fd = open(argv[1], O_RDONLY);
+    if (fd == -1)
+        return (exit_error(2));
     data.matrix_boladona = read_map(fd, argv[1], &data);
     if (!data.matrix_boladona)
-    {
-        ft_printf("Mapa inválido.\n");
-        return (-1);
-    }
+        return (exit_error(3));
     read_size(&data);
     fdf(&data);
     return (0);
