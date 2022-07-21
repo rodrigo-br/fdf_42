@@ -17,7 +17,11 @@ int main (int argc, char **argv)
     t_data  data;
     int     fd;
 
-    (void)argc;
+    if (argc != 2)
+    {
+        ft_printf("Número de argumentos inválido.\n");
+        return (-1);
+    }
     data.x_axis = 10;
     data.y_axis = 10;
     data.z = 1;
@@ -27,6 +31,11 @@ int main (int argc, char **argv)
     data.projection = 0;
     fd = open(argv[1], O_RDONLY);
     data.matrix_boladona = read_map(fd, argv[1], &data);
+    if (!data.matrix_boladona)
+    {
+        ft_printf("Mapa inválido.\n");
+        return (-1);
+    }
     read_size(&data);
     fdf(&data);
     return (0);
