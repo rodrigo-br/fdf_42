@@ -53,6 +53,7 @@ typedef struct	s_data
     int     y_axis;
     double  angle;
     int     z;
+    int     test;
 	int		bits_per_pixel;
 	int		line_length;
     int     x_columns;

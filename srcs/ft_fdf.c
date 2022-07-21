@@ -32,8 +32,8 @@ static int	pimba(t_data *data)
 int	key_hook(int keycode, t_data *mlx)
 {
 	ft_printf("keycode = %d\n", keycode);
-	// if (keycode == ESC)
-	// 	end_program(mlx);
+	if (keycode == ESC)
+		end_program(mlx);
 	if (keycode == UP)
 		mlx->y_axis += 50;
 	else if (keycode == DOWN)
@@ -70,6 +70,30 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	*(unsigned int*)dst = color;
 }
 
+int	mouse_release(int keycode, int x, int y, t_data *mlx)
+{
+	(void)x;
+	(void)y;
+	mlx->test = 0;
+	mlx->zoom += 1;
+	printf("ENTROU\n");
+	pimba(mlx);
+	return (0);
+}
+
+int	mouse_hook(int keycode, int x, int y, t_data *mlx)
+{
+	(void)y;
+	(void)x;
+	ft_printf("keycode = %d\n", keycode);
+	if (keycode == 5 && mlx->zoom > 1)
+		mlx->zoom -= 1;
+	else if (keycode == 4)
+		mlx->zoom += 1;
+	pimba(mlx);
+	return (0);
+}
+
 int	fdf(t_data *data)
 {
 	data->mlx = mlx_init();
@@ -80,9 +104,10 @@ int	fdf(t_data *data)
 	put_points(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	mlx_hook(data->win, KEY_PRESS_EVENT, KEY_PRESS_MASK, key_hook, data);
-	//mlx_key_hook(data->win, key_hook, data);
-	mlx_hook(data->win, DESTROY_EVENT, DESTROY_MASK, end_program, data);
-	mlx_hook(data->win, ENTER_EVENT, ENTER_WINDOW_MASK, pimba, data);
+	//mlx_mouse_hook(data->win, mouse_hook, data);
+	mlx_hook(data->win, 04, 1L<<2, mouse_hook, data);
+	mlx_hook(data->win, DESTROY_EVENT, 0, end_program, data);
+	mlx_hook(data->win, ENTER_EVENT, 0, pimba, data);
 	mlx_loop(data->mlx);
 	return (0);
 }

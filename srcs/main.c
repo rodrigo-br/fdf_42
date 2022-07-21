@@ -12,7 +12,7 @@ void    read_size(t_data *data)
     //     data->start -= 2;
 }
 
-int main (int *argc, char **argv)
+int main (int argc, char **argv)
 {
     t_data  data;
     int     fd;
