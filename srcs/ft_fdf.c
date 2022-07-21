@@ -32,9 +32,9 @@ static int	pimba(t_data *data)
 int	key_hook(int keycode, t_data *mlx)
 {
 	ft_printf("keycode = %d\n", keycode);
-	if (keycode == ESC)
-		end_program(mlx);
-	else if (keycode == UP)
+	// if (keycode == ESC)
+	// 	end_program(mlx);
+	if (keycode == UP)
 		mlx->y_axis += 50;
 	else if (keycode == DOWN)
 		mlx->y_axis -= 50;
@@ -80,7 +80,7 @@ int	fdf(t_data *data)
 	put_points(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	mlx_hook(data->win, KEY_PRESS_EVENT, KEY_PRESS_MASK, key_hook, data);
-	mlx_key_hook(data->win, key_hook, data);
+	//mlx_key_hook(data->win, key_hook, data);
 	mlx_hook(data->win, DESTROY_EVENT, DESTROY_MASK, end_program, data);
 	mlx_hook(data->win, ENTER_EVENT, ENTER_WINDOW_MASK, pimba, data);
 	mlx_loop(data->mlx);
