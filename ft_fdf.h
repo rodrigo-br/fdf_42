@@ -21,27 +21,29 @@
 # include <stdio.h>
 # include <limits.h>
 
-# define ESC        65307
-# define LEFT       65361
-# define UP         65362
-# define RIGHT      65363
-# define DOWN       65364
-# define SPACE      32
-# define W_KEY      119
-# define S_KEY      115
-# define E_KEY      101
-# define Q_KEY      113
-# define PLUS_KEY   65451
-# define MINUS_KEY  65453
+# define ESC                65307
+# define LEFT               65361
+# define UP                 65362
+# define RIGHT              65363
+# define DOWN               65364
+# define SPACE              32
+# define W_KEY              119
+# define S_KEY              115
+# define E_KEY              101
+# define Q_KEY              113
+# define PLUS_KEY           65451
+# define MINUS_KEY          65453
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4096
-# define WIDTH      1420
-# define HEIGHT     1024
+#  define BUFFER_SIZE       4096
+# define WIDTH              1280
+# define HEIGHT             720
+# define MENU_WIDTH         150
 # define KEY_PRESS_EVENT    02
+# define MOUSE_PRESS_EVENT  04
 # define DESTROY_EVENT      17
 # define ENTER_EVENT        07
 # define KEY_PRESS_MASK     1L<<0
-# define DESTROY_MASK       1L<<2
+# define MOUSE_PRESS_MASK   1L<<2
 # define ENTER_WINDOW_MASK  1L<<04
 # endif
 
@@ -53,7 +55,6 @@ typedef struct	s_data
     int     y_axis;
     double  angle;
     int     z;
-    int     test;
 	int		bits_per_pixel;
 	int		line_length;
     int     x_columns;
@@ -62,6 +63,7 @@ typedef struct	s_data
     int     start;
     int     zoom;
 	char	*addr;
+    void    *menu;
 	void	*mlx;
 	void	*win;
 	void	*img;

@@ -1,6 +1,28 @@
 #include <mlx.h>
 #include "../ft_fdf.h"
 
+void	menu(t_data *data)
+{
+	int	menu_pos;
+	int	w;
+	int	line;
+
+	w = 0xFFFFFF;
+	menu_pos = WIDTH - MENU_WIDTH + 10;
+	line = HEIGHT;
+	while (line)
+	{
+		mlx_pixel_put(data->mlx, data->win, menu_pos - 10, line, w);
+		line--;
+	}
+	mlx_string_put(data->mlx, data->win, menu_pos, 50, w, "Zoom : scroll or +/-");
+	mlx_string_put(data->mlx, data->win, menu_pos, 70, w, "Move : arrows");
+	mlx_string_put(data->mlx, data->win, menu_pos, 90, w, "Increase Z : Q/E");
+	mlx_string_put(data->mlx, data->win, menu_pos, 110, w, "Rotate Z : W/S");
+	mlx_string_put(data->mlx, data->win, menu_pos, 130, w, "Change 2D/3D: Space");
+	mlx_string_put(data->mlx, data->win, menu_pos, 150, w, "Close : Esc");
+}
+
 int	end_program(t_data *mlx)
 {
 	int y;
@@ -23,9 +45,10 @@ int	end_program(t_data *mlx)
 static int	pimba(t_data *data)
 {
 	mlx_destroy_image(data->mlx, data->img);
-	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->img = mlx_new_image(data->mlx, WIDTH - MENU_WIDTH, HEIGHT);
 	put_points(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	menu(data);
 	return (0);
 }
 
@@ -34,7 +57,7 @@ int	key_hook(int keycode, t_data *mlx)
 	ft_printf("keycode = %d\n", keycode);
 	if (keycode == ESC)
 		end_program(mlx);
-	if (keycode == UP)
+	else if (keycode == UP)
 		mlx->y_axis += 50;
 	else if (keycode == DOWN)
 		mlx->y_axis -= 50;
@@ -64,21 +87,10 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 {
 	char	*dst;
 
-	if (y > HEIGHT || x > WIDTH || x < 0 || y < 0)
+	if (y > HEIGHT || x > WIDTH - MENU_WIDTH || x < 0 || y < 0)
 		return ;
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
 	*(unsigned int*)dst = color;
-}
-
-int	mouse_release(int keycode, int x, int y, t_data *mlx)
-{
-	(void)x;
-	(void)y;
-	mlx->test = 0;
-	mlx->zoom += 1;
-	printf("ENTROU\n");
-	pimba(mlx);
-	return (0);
 }
 
 int	mouse_hook(int keycode, int x, int y, t_data *mlx)
@@ -94,20 +106,22 @@ int	mouse_hook(int keycode, int x, int y, t_data *mlx)
 	return (0);
 }
 
+
 int	fdf(t_data *data)
 {
 	data->mlx = mlx_init();
-	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "y mars leak?");
-	data->img = mlx_new_image(data->mlx, WIDTH, HEIGHT);
+	data->win = mlx_new_window(data->mlx, WIDTH, HEIGHT, "please start at center -.-\"");
+	data->img = mlx_new_image(data->mlx, WIDTH - MENU_WIDTH, HEIGHT);
 	data->addr = mlx_get_data_addr(data->img, &data->bits_per_pixel, \
 &data->line_length, &data->endian);
 	put_points(data);
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
+	menu(data);
 	mlx_hook(data->win, KEY_PRESS_EVENT, KEY_PRESS_MASK, key_hook, data);
 	//mlx_mouse_hook(data->win, mouse_hook, data);
-	mlx_hook(data->win, 04, 1L<<2, mouse_hook, data);
-	mlx_hook(data->win, DESTROY_EVENT, 0, end_program, data);
-	mlx_hook(data->win, ENTER_EVENT, 0, pimba, data);
+	mlx_hook(data->win, MOUSE_PRESS_EVENT, MOUSE_PRESS_MASK, mouse_hook, data);
+	mlx_hook(data->win, DESTROY_EVENT, MOUSE_PRESS_MASK, end_program, data);
+	mlx_hook(data->win, ENTER_EVENT, ENTER_WINDOW_MASK, pimba, data);
 	mlx_loop(data->mlx);
 	return (0);
 }
