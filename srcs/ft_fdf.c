@@ -16,11 +16,11 @@ void	menu(t_data *data)
 		line--;
 	}
 	mlx_string_put(data->mlx, data->win, menu_pos, 50, w, "Zoom : scroll or +/-");
-	mlx_string_put(data->mlx, data->win, menu_pos, 70, w, "Move : arrows");
-	mlx_string_put(data->mlx, data->win, menu_pos, 90, w, "Increase Z : Q/E");
-	mlx_string_put(data->mlx, data->win, menu_pos, 110, w, "Rotate Z : W/S");
-	mlx_string_put(data->mlx, data->win, menu_pos, 130, w, "Change 2D/3D: Space");
-	mlx_string_put(data->mlx, data->win, menu_pos, 150, w, "Close : Esc");
+	mlx_string_put(data->mlx, data->win, menu_pos, 75, w, "Move : arrows");
+	mlx_string_put(data->mlx, data->win, menu_pos, 100, w, "Increase Z : Q/E");
+	mlx_string_put(data->mlx, data->win, menu_pos, 125, w, "Rotate Z : W/S");
+	mlx_string_put(data->mlx, data->win, menu_pos, 150, w, "Change 2D/3D: Space");
+	mlx_string_put(data->mlx, data->win, menu_pos, 175, w, "Close : Esc");
 }
 
 int	end_program(t_data *mlx)
@@ -71,7 +71,7 @@ int	key_hook(int keycode, t_data *mlx)
 		mlx->angle -= 0.1;
 	else if (keycode == PLUS_KEY)
 		mlx->zoom += 1;
-	else if (keycode == MINUS_KEY && mlx->zoom > 1)
+	else if (keycode == MINUS_KEY && mlx->zoom > 2)
 		mlx->zoom -= 1;
 	else if (keycode == E_KEY)
 		mlx->z += 1;
@@ -98,14 +98,13 @@ int	mouse_hook(int keycode, int x, int y, t_data *mlx)
 	(void)y;
 	(void)x;
 	ft_printf("keycode = %d\n", keycode);
-	if (keycode == 5 && mlx->zoom > 1)
+	if (keycode == 5 && mlx->zoom > 2)
 		mlx->zoom -= 1;
 	else if (keycode == 4)
 		mlx->zoom += 1;
 	pimba(mlx);
 	return (0);
 }
-
 
 int	fdf(t_data *data)
 {
@@ -118,7 +117,6 @@ int	fdf(t_data *data)
 	mlx_put_image_to_window(data->mlx, data->win, data->img, 0, 0);
 	menu(data);
 	mlx_hook(data->win, KEY_PRESS_EVENT, KEY_PRESS_MASK, key_hook, data);
-	//mlx_mouse_hook(data->win, mouse_hook, data);
 	mlx_hook(data->win, MOUSE_PRESS_EVENT, MOUSE_PRESS_MASK, mouse_hook, data);
 	mlx_hook(data->win, DESTROY_EVENT, MOUSE_PRESS_MASK, end_program, data);
 	mlx_hook(data->win, ENTER_EVENT, ENTER_WINDOW_MASK, pimba, data);

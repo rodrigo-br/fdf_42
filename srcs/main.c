@@ -10,6 +10,7 @@ static int  exit_error(int erro)
         ft_printf("Mapa inválido.\n");
     return (-1);
 }
+
 static void    fill_data(t_data *data)
 {
     int max;
