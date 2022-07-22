@@ -1,6 +1,18 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   hooks.c                                            :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/22 20:55:58 by ralves-b          #+#    #+#             */
+/*   Updated: 2022/07/22 21:02:05 by ralves-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "../ft_fdf.h"
 
-static void key_hook_rotate(int keycode, t_data *mlx)
+static void	key_hook_rotate(int keycode, t_data *mlx)
 {
 	if (keycode == W_KEY)
 		mlx->alpha += 0.1;
@@ -46,12 +58,11 @@ int	key_hook(int keycode, t_data *mlx)
 	else if (keycode == ENTER_KEY)
 		fill_data(mlx);
 	else if (keycode == W_KEY || keycode == S_KEY || keycode == E_KEY
-	|| keycode == Q_KEY || keycode == A_KEY || keycode == D_KEY
-	|| keycode == Z_KEY || keycode == X_KEY || keycode == M_KEY
-	|| keycode == N_KEY)
+		|| keycode == Q_KEY || keycode == A_KEY || keycode == D_KEY
+		|| keycode == Z_KEY || keycode == X_KEY || keycode == M_KEY
+		|| keycode == N_KEY)
 		key_hook_rotate(keycode, mlx);
-	rerender(mlx);
-	return (0);
+	return (rerender(mlx), 0);
 }
 
 int	mouse_hook(int keycode, int x, int y, t_data *mlx)
