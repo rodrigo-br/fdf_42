@@ -1,4 +1,5 @@
-SRC		=	ft_fdf.c find_axis.c bresenham.c ft_n_max.c
+SRC		=	exit.c parse_map.c bresenham.c ft_n_max.c screen.c \
+			hooks.c colour.c rotate.c bresenham_utils.c
 
 H_SRC	=	ft_fdf.h
 
@@ -23,7 +24,6 @@ $(NAME):	${OBJS} ${H_SRC}
 			cc -g3 $(addprefix srcs/, ${SRC}) ./srcs/main.c ${NAME} ${IFT} ${IMLX} -o fdf
 
 all: 		${NAME}
-
 
 clean:
 			${RM} ${OBJS}

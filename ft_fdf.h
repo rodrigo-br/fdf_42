@@ -91,5 +91,17 @@ int     ft_n_max(int x, int y);
 void    put_points(t_data *data);
 int     fdf(t_data *data);
 void    fill_data(t_data *data);
+unsigned int find_color(int pos, int pos_1, t_data *data);
+void    check_color_max(int n, t_data *data);
+int     key_hook(int keycode, t_data *mlx);
+int     mouse_hook(int keycode, int x, int y, t_data *mlx);
+int     end_program(t_data *mlx);
+int     rerender(t_data *data);
+int     exit_error(int erro);
+void    rotate(t_bres *bres, t_data *data);
+void    add_3d(t_bres *bres, t_data *data);
+void    add_steps(t_bres *bres);
+void    add_position(t_bres *bres, t_data *data);
+void    add_zoom(t_bres *bres, int zoom);
 
 #endif

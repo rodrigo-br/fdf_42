@@ -1,17 +1,5 @@
 #include "../ft_fdf.h"
 
-
-static int  exit_error(int erro)
-{
-    if (erro == 1)
-        ft_printf("Número de argumentos inválido.\n");
-    else if (erro == 2)
-        ft_printf("Arquivo inválido.\n");
-    else
-        ft_printf("Mapa inválido.\n");
-    return (-1);
-}
-
 void    fill_data(t_data *data)
 {
     int max;

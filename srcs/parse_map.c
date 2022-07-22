@@ -1,6 +1,6 @@
 #include "../ft_fdf.h"
 
-int     **clean(char **temp_matrix, int **matrix, int count, int fd)
+static int  clean(char **temp_matrix, int **matrix, int count, int fd)
 {
     int     i;
     char    *gnl;
@@ -26,7 +26,7 @@ int     **clean(char **temp_matrix, int **matrix, int count, int fd)
         if (!gnl)
             break;
     }
-    return (NULL);
+    return (0);
 }
 
 int    testmap(char **matrix)
@@ -39,59 +39,43 @@ int    testmap(char **matrix)
     return (i);
 }
 
-static void check_color_max(int n, t_data *data)
+static int fill_matrix (t_data *data, int **matrix, int fd)
 {
-    if (n < 0)
-    {
-        n = abs(n);
-        if (data->color_hold < (unsigned int)n)
-            data->color_hold = n;
-        if ((unsigned int)n > data->color_max + n)
-            data->color_max = n;
-        if ((unsigned int)n < data->color_min + n)
-            data->color_min = n;
-    }
-    else
-    {
-        if ((unsigned int)n > data->color_max)
-            data->color_max = n;
-        if ((unsigned int)n < data->color_min)
-            data->color_min = n;
-    }
-}
-
-int **faz_matrix_boladona(int fd, char *arg_1, t_data *data)
-{
-    int     **matrix;
     char    **temp_matrix;
     char    *mapping;
     int     i;
     int     temp_i;
 
-    i = 0;
-    fd = open(arg_1, O_RDONLY);
-    matrix = (int **)malloc(sizeof(int *) * data->y_lines);
-    while (i < data->y_lines)
+    i = -1;
+    while (++i < data->y_lines)
     {
         mapping = get_next_line(fd);
         temp_matrix = ft_split(mapping, ' ');
         free(mapping);
         if (testmap(temp_matrix) != data->x_columns)
             return (clean(temp_matrix, matrix, i, fd));
-        temp_i = 0;
+        temp_i = -1;
         matrix[i] = (int *)malloc(sizeof(int) * data->x_columns);
-        while (temp_i < data->x_columns)
+        while (++temp_i < data->x_columns)
         {
             matrix[i][temp_i] = ft_atoi(temp_matrix[temp_i]);
             check_color_max(matrix[i][temp_i], data);
             free(temp_matrix[temp_i]);
-            temp_i++;
         }
         free(temp_matrix);
-        i++;
     }
     mapping = get_next_line(fd);
-    free(mapping);
+    return (free(mapping), 1);
+}
+
+int **create_matrix(int fd, char *arg_1, t_data *data)
+{
+    int     **matrix;
+
+    fd = open(arg_1, O_RDONLY);
+    matrix = (int **)malloc(sizeof(int *) * data->y_lines);
+    if (!fill_matrix(data, matrix, fd))
+        return (NULL);
     close(fd);
     if (data->color_hold != 0)
         data->color_max += data->color_hold;
@@ -126,6 +110,5 @@ int **read_map(int fd, char *arg_1, t_data *data)
         line = get_next_line(fd);
         free(line);
     }
-    close(fd);
-    return (faz_matrix_boladona(fd, arg_1, data));
+    return (close(fd), create_matrix(fd, arg_1, data));
 }
