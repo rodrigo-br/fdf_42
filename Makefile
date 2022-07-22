@@ -4,13 +4,13 @@ H_SRC	=	ft_fdf.h
 
 OBJS	=	$(addprefix srcs/, ${SRC:.c=.o})
 
-NAME	=	fdf
+NAME	=	fdf_binary
 
-FLAGS	=	-Wall -Wextra #-Werror
+FLAGS	=	-Wall -Wextra -Werror
 
 RM		=	rm -f
 
-IFT		= -Ilibft -Llibft -lft
+IFT		= -Ilibft -Llibft
 
 IMLX	= -Imlx -Lmlx -lmlx -lXext -lX11 -lm
 
@@ -20,6 +20,7 @@ IMLX	= -Imlx -Lmlx -lmlx -lXext -lX11 -lm
 $(NAME):	${OBJS} ${H_SRC}
 			make -C ./printf
 			mv ./printf/libftprintf.a ./$(NAME)
+			cc -g3 $(addprefix srcs/, ${SRC}) ./srcs/main.c ${NAME} ${IFT} ${IMLX} -o fdf
 
 all: 		${NAME}
 
@@ -29,6 +30,7 @@ clean:
 
 fclean:		clean
 			${RM} ${NAME}
+			${RM} fdf
 
 re:			fclean all
 

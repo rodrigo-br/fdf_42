@@ -27,10 +27,17 @@
 # define RIGHT              65363
 # define DOWN               65364
 # define SPACE              32
+# define A_KEY              97
+# define D_KEY              100
 # define W_KEY              119
 # define S_KEY              115
 # define E_KEY              101
 # define Q_KEY              113
+# define Z_KEY              122
+# define X_KEY              120
+# define M_KEY              109
+# define N_KEY              110
+# define ENTER_KEY          65293
 # define PLUS_KEY           65451
 # define MINUS_KEY          65453
 # ifndef BUFFER_SIZE
@@ -54,7 +61,7 @@ typedef struct	s_data
     int     x_axis;
     int     y_axis;
     double  angle;
-    int     z;
+    double  z;
 	int		bits_per_pixel;
 	int		line_length;
     int     x_columns;
@@ -67,15 +74,18 @@ typedef struct	s_data
 	void	*mlx;
 	void	*win;
 	void	*img;
+    double  gamma;
+    double  alpha;
+    double  beta;
 }	t_data;
 
 typedef struct s_bres
 {
     float      delta_x;
     float      delta_y;
-    float      x[2];
-    float      y[2];
-    int        z[2];
+    float      x[3];
+    float      y[3];
+    int        z[3];
 }   t_bres;
 
 
@@ -86,5 +96,6 @@ int     ft_n_max(int x, int y);
 void    put_points(t_data *data);
 int     fdf(t_data *data);
 int     ft_abs(int n);
+void    fill_data(t_data *data);
 
 #endif

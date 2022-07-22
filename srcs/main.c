@@ -11,7 +11,7 @@ static int  exit_error(int erro)
     return (-1);
 }
 
-static void    fill_data(t_data *data)
+void    fill_data(t_data *data)
 {
     int max;
 
@@ -25,6 +25,9 @@ static void    fill_data(t_data *data)
     data->angle = 0.8;
     data->projection = 0;
     data->start = 10;
+    data->gamma = 0;
+    data->alpha = 0;
+    data->beta = 0;
 }
 
 int main (int argc, char **argv)

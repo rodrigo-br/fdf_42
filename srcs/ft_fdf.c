@@ -15,12 +15,15 @@ void	menu(t_data *data)
 		mlx_pixel_put(data->mlx, data->win, menu_pos - 10, line, w);
 		line--;
 	}
-	mlx_string_put(data->mlx, data->win, menu_pos, 50, w, "Zoom : scroll or +/-");
+	mlx_string_put(data->mlx, data->win, menu_pos, 25, w, "Close : Esc");
+	mlx_string_put(data->mlx, data->win, menu_pos, 50, w, "Change 2D/3D: Space");
 	mlx_string_put(data->mlx, data->win, menu_pos, 75, w, "Move : arrows");
-	mlx_string_put(data->mlx, data->win, menu_pos, 100, w, "Increase Z : Q/E");
-	mlx_string_put(data->mlx, data->win, menu_pos, 125, w, "Rotate Z : W/S");
-	mlx_string_put(data->mlx, data->win, menu_pos, 150, w, "Change 2D/3D: Space");
-	mlx_string_put(data->mlx, data->win, menu_pos, 175, w, "Close : Esc");
+	mlx_string_put(data->mlx, data->win, menu_pos, 100, w, "Zoom : scroll or +/-");
+	mlx_string_put(data->mlx, data->win, menu_pos, 125, w, "Spin Z : Z/X");
+	mlx_string_put(data->mlx, data->win, menu_pos, 150, w, "Rotate Z : Q/E");
+	mlx_string_put(data->mlx, data->win, menu_pos, 175, w, "Rotate X : W/S");
+	mlx_string_put(data->mlx, data->win, menu_pos, 200, w, "Rotate Y : A/D");
+	mlx_string_put(data->mlx, data->win, menu_pos, 225, w, "3D Depth : M/N");
 }
 
 int	end_program(t_data *mlx)
@@ -58,27 +61,41 @@ int	key_hook(int keycode, t_data *mlx)
 	if (keycode == ESC)
 		end_program(mlx);
 	else if (keycode == UP)
-		mlx->y_axis += 50;
+		mlx->y_axis += 30;
 	else if (keycode == DOWN)
-		mlx->y_axis -= 50;
+		mlx->y_axis -= 30;
 	else if (keycode == LEFT)
-		mlx->x_axis += 50;
+		mlx->x_axis += 30;
 	else if (keycode == RIGHT)
-		mlx->x_axis -= 50;
+		mlx->x_axis -= 30;
 	else if (keycode == W_KEY)
-		mlx->angle += 0.1;
+		mlx->alpha += 0.1;
 	else if (keycode == S_KEY)
-		mlx->angle -= 0.1;
+		mlx->alpha -= 0.1;
 	else if (keycode == PLUS_KEY)
 		mlx->zoom += 1;
 	else if (keycode == MINUS_KEY && mlx->zoom > 2)
 		mlx->zoom -= 1;
 	else if (keycode == E_KEY)
-		mlx->z += 1;
+		mlx->gamma += 0.1;
 	else if (keycode == Q_KEY)
-		mlx->z -= 1;
+		mlx->gamma -= 0.1;
 	else if (keycode == SPACE)
 		mlx->projection += 1;
+	else if (keycode == A_KEY)
+		mlx->beta -= 0.1;
+	else if (keycode == D_KEY)
+		mlx->beta += 0.1;
+	else if (keycode == Z_KEY)
+		mlx->angle += 0.1;
+	else if (keycode == X_KEY)
+		mlx->angle -= 0.1;
+	else if (keycode == M_KEY)
+		mlx->z += 0.1;
+	else if (keycode == N_KEY)
+		mlx->z -= 0.1;
+	else if (keycode == ENTER_KEY)
+		fill_data(mlx);
 	pimba(mlx);
 	return (0);
 }
