@@ -6,13 +6,13 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 20:50:15 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/07/22 20:54:25 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:17:57 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../ft_fdf.h"
 
-void    add_zoom(t_bres *bres, int zoom)
+void	add_zoom(t_bres *bres, int zoom)
 {
 	bres->x[0] *= zoom;
 	bres->x[1] *= zoom;
@@ -30,7 +30,7 @@ void	add_position(t_bres *bres, t_data *data)
 
 void	add_steps(t_bres *bres)
 {
-	int steps;
+	int	steps;
 
 	bres->delta_x = bres->x[1] - bres->x[0];
 	bres->delta_y = bres->y[1] - bres->y[0];

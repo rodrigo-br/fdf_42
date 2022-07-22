@@ -14,7 +14,7 @@
 
 void	fill_data(t_data *data)
 {
-	int max;
+	int	max;
 
 	max = ft_n_max(data->y_lines, data->x_columns);
 	data->zoom = 15 - ((max / 10) * 2);
@@ -32,7 +32,7 @@ void	fill_data(t_data *data)
 	data->col.color_n = 0;
 }
 
-int main (int argc, char **argv)
+int	main(int argc, char **argv)
 {
 	t_data	data;
 	int		fd;

@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   buttons.h                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/07/22 21:22:47 by ralves-b          #+#    #+#             */
+/*   Updated: 2022/07/22 21:50:32 by ralves-b         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #ifndef BUTTONS_H
 # define BUTTONS_H
 
@@ -23,15 +35,9 @@
 # define ENTER_KEY          65293
 # define PLUS_KEY           65451
 # define MINUS_KEY          65453
+# define KEY_PRESS_EVENT	02
+# define MOUSE_PRESS_EVENT	04
+# define DESTROY_EVENT		17
+# define ENTER_EVENT		07
 
-/*--------------------------------------------------------------------\
-|                   MLX/X11 EVENTS AND MASKS                          |
-\--------------------------------------------------------------------*/
-# define KEY_PRESS_EVENT    02
-# define MOUSE_PRESS_EVENT  04
-# define DESTROY_EVENT      17
-# define ENTER_EVENT        07
-# define KEY_PRESS_MASK     1L<<0
-# define MOUSE_PRESS_MASK   1L<<2
-# define ENTER_WINDOW_MASK  1L<<04
 #endif

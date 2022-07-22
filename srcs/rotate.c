@@ -6,7 +6,7 @@
 /*   By: ralves-b <ralves-b@student.42sp.org.br>    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/07/22 20:58:10 by ralves-b          #+#    #+#             */
-/*   Updated: 2022/07/22 20:58:11 by ralves-b         ###   ########.fr       */
+/*   Updated: 2022/07/22 21:15:39 by ralves-b         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static void	rotate_alpha(t_bres *bres, t_data *data)
 	bres->z[1] = bres->y[2] * sin(data->alpha) + bres->z[2] * cos(data->alpha);
 }
 
-static void rotate_beta(t_bres *bres, t_data *data)
+static void	rotate_beta(t_bres *bres, t_data *data)
 {
 	bres->x[2] = bres->x[0];
 	bres->z[2] = bres->z[0] * data->z;
@@ -36,7 +36,7 @@ static void rotate_beta(t_bres *bres, t_data *data)
 	bres->z[1] = -bres->x[2] * sin(data->beta) + bres->z[2] * cos(data->beta);
 }
 
-static void rotate_gamma(t_bres *bres, t_data *data)
+static void	rotate_gamma(t_bres *bres, t_data *data)
 {
 	bres->x[2] = bres->x[0];
 	bres->y[2] = bres->y[0];

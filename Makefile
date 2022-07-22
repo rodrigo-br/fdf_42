@@ -16,7 +16,7 @@ IFT		= -Ilibft -Llibft
 IMLX	= -Imlx -Lmlx -lmlx -lXext -lX11 -lm
 
 .c.o:
-			cc ${FLAGS} -c $< -o ${<:.c=.o} -I.
+			cc ${FLAGS} -c $< ${IFT} ${IMLX} -o ${<:.c=.o} -I.
 
 $(NAME):	${OBJS} ${H_SRC}
 			make -C ./printf
