@@ -24,6 +24,8 @@ void	menu(t_data *data)
 	mlx_string_put(data->mlx, data->win, menu_pos, 175, w, "Rotate X : W/S");
 	mlx_string_put(data->mlx, data->win, menu_pos, 200, w, "Rotate Y : A/D");
 	mlx_string_put(data->mlx, data->win, menu_pos, 225, w, "3D Depth : M/N");
+	mlx_string_put(data->mlx, data->win, menu_pos, 250, w, "Color White : Click");
+	mlx_string_put(data->mlx, data->win, menu_pos, 275, w, "Reset : Enter");
 }
 
 int	end_program(t_data *mlx)
@@ -119,6 +121,8 @@ int	mouse_hook(int keycode, int x, int y, t_data *mlx)
 		mlx->zoom -= 1;
 	else if (keycode == 4)
 		mlx->zoom += 1;
+	else if (keycode == 1)
+		mlx->col.color_n = UINT_MAX / 4;
 	pimba(mlx);
 	return (0);
 }

@@ -1,13 +1,17 @@
 #include "../ft_fdf.h"
 
-int find_color(int pos, int pos_1)
+unsigned int find_color(int pos, int pos_1, t_data *data)
 {
-    if (pos > 0 || pos_1 > 0)
-        return (0xFF0000);
-    else if (pos < 0 || pos_1 < 0)
-        return (0x0000FF);
-    else
-        return (0xFFFFFF);
+    unsigned int color;
+
+    color = UINT_MAX / data->color_hold / 100 * ft_n_max(pos, pos_1);
+    color += UINT_MAX / 3;
+    color += (data->z * 100);
+    if (data->col.color_n == UINT_MAX / 4)
+    {
+        color = data->col.color_n;
+    }
+    return (color);
 }
 
 void    add_3d(t_bres *bres, t_data *data)
@@ -17,12 +21,12 @@ void    add_3d(t_bres *bres, t_data *data)
 
     temp_x = (bres->x[0] - bres->y[0]) * cos(data->angle);
     temp_y = (bres->x[0] + bres->y[0]) * sin(data->angle) \
-    - (bres->z[0]);
+    - (bres->z[0] * data->z);
     bres->x[0] = temp_x;
     bres->y[0] = temp_y;
     temp_x = (bres->x[1] - bres->y[1]) * cos(data->angle);
     temp_y = (bres->x[1] + bres->y[1]) * sin(data->angle) \
-    - (bres->z[1]);
+    - (bres->z[1] * data->z);
     bres->x[1] = temp_x;
     bres->y[1] = temp_y;
 }
@@ -59,9 +63,9 @@ void    rotate(t_bres *bres, t_data *data)
 void    bresenham(t_data *data, t_bres bres)
 {
     int     steps;
-    int     color;
+    t_rgb   color;
 
-    color = find_color(bres.z[0], bres.z[1]);
+    color.color_n = find_color(bres.z[0], bres.z[1], data);
     bres.x[0] *= data->zoom;
     bres.x[1] *= data->zoom;
     bres.y[0] *= data->zoom;
@@ -82,7 +86,7 @@ void    bresenham(t_data *data, t_bres bres)
     bres.delta_y /= steps;
     while ((int)(bres.x[0] - bres.x[1]) || (int)(bres.y[0] - bres.y[1]))
     {
-        my_mlx_pixel_put(data, bres.x[0], bres.y[0], color);
+        my_mlx_pixel_put(data, bres.x[0], bres.y[0], color.color_n);
         bres.x[0] += bres.delta_x;
         bres.y[0] += bres.delta_y;
     }

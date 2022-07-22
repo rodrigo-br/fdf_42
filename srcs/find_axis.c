@@ -38,6 +38,28 @@ int    testmap(char **matrix)
         i++;
     return (i);
 }
+
+static void check_color_max(int n, t_data *data)
+{
+    if (n < 0)
+    {
+        n = abs(n);
+        if (data->color_hold < (unsigned int)n)
+            data->color_hold = n;
+        if ((unsigned int)n > data->color_max + n)
+            data->color_max = n;
+        if ((unsigned int)n < data->color_min + n)
+            data->color_min = n;
+    }
+    else
+    {
+        if ((unsigned int)n > data->color_max)
+            data->color_max = n;
+        if ((unsigned int)n < data->color_min)
+            data->color_min = n;
+    }
+}
+
 int **faz_matrix_boladona(int fd, char *arg_1, t_data *data)
 {
     int     **matrix;
@@ -61,6 +83,7 @@ int **faz_matrix_boladona(int fd, char *arg_1, t_data *data)
         while (temp_i < data->x_columns)
         {
             matrix[i][temp_i] = ft_atoi(temp_matrix[temp_i]);
+            check_color_max(matrix[i][temp_i], data);
             free(temp_matrix[temp_i]);
             temp_i++;
         }
@@ -70,6 +93,9 @@ int **faz_matrix_boladona(int fd, char *arg_1, t_data *data)
     mapping = get_next_line(fd);
     free(mapping);
     close(fd);
+    if (data->color_hold != 0)
+        data->color_max += data->color_hold;
+    data->color_hold = data->color_max - data->color_min;
     return(matrix);
 }
 

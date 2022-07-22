@@ -1,5 +1,6 @@
 #include "../ft_fdf.h"
 
+
 static int  exit_error(int erro)
 {
     if (erro == 1)
@@ -28,6 +29,7 @@ void    fill_data(t_data *data)
     data->gamma = 0;
     data->alpha = 0;
     data->beta = 0;
+    data->col.color_n = 0;
 }
 
 int main (int argc, char **argv)
@@ -42,6 +44,9 @@ int main (int argc, char **argv)
     fd = open(argv[1], O_RDONLY);
     if (fd == -1)
         return (exit_error(2));
+    data.color_max = 0;
+    data.color_min = UINT_MAX;
+    data.color_hold = 0;
     data.matrix_boladona = read_map(fd, argv[1], &data);
     if (!data.matrix_boladona)
         return (exit_error(3));

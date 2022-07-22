@@ -22,6 +22,7 @@
 # include <mlx.h>
 # include <fcntl.h>
 # include <math.h>
+# include <limits.h>
 
 /*-----------------------------------------------------------------\
 |                   DEFINES                                        |
@@ -36,6 +37,12 @@
 /*-----------------------------------------------------------------\
 |                   STRUCTS                                         |
 \-----------------------------------------------------------------*/
+typedef union u_rgb
+{
+    unsigned int    color_n;
+    char            rgb[4];
+}   t_rgb;
+
 typedef struct	s_data
 {
     int     projection;
@@ -59,6 +66,10 @@ typedef struct	s_data
     double  gamma;
     double  alpha;
     double  beta;
+    unsigned int color_max;
+    unsigned int color_min;
+    unsigned int color_hold;
+    t_rgb   col;
 }	t_data;
 
 typedef struct s_bres

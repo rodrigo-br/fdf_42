@@ -24,6 +24,7 @@ $(NAME):	${OBJS} ${H_SRC}
 
 all: 		${NAME}
 
+
 clean:
 			${RM} ${OBJS}
 			make clean -C ./printf
@@ -33,5 +34,7 @@ fclean:		clean
 			${RM} fdf
 
 re:			fclean all
+
+bonus:		${NAME}
 
 .PHONY:		all clean fclean re
