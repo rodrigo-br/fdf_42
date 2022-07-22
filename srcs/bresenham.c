@@ -1,6 +1,4 @@
 #include "../ft_fdf.h"
-#include <stdio.h>
-#include <math.h>
 
 int find_color(int pos, int pos_1)
 {
