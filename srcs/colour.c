@@ -37,12 +37,12 @@ unsigned int	find_color(int pos, int pos_1, t_data *data)
 {
 	unsigned int	color;
 
+	if (pos + pos_1 == 0)
+		return (0xFFFFFF);
 	color = UINT_MAX / data->color_hold / 100 * ft_n_max(pos, pos_1);
 	color += UINT_MAX / 3;
 	color += (data->z * 100);
 	if (data->col.color_n == UINT_MAX / 4)
-	{
 		color = data->col.color_n;
-	}
 	return (color);
 }

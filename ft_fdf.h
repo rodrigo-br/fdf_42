@@ -13,9 +13,6 @@
 #ifndef FT_FDF_H
 # define FT_FDF_H
 
-/*-----------------------------------------------------------------\
-|				   INCLUDES										|
-\-----------------------------------------------------------------*/
 # include "printf/ft_printf.h"
 # include "buttons.h"
 # include <stdlib.h>
