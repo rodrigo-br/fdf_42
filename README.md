@@ -49,4 +49,7 @@ ls maps/
 ./fdf maps/(map).fdf
 ```
 
-<img src="fdf_1.png">
+<br><img src="fdf_1.png">
+<br><img src="fdf_2.png">
+<br><img src="fdf_3.png">
+<br><img src="fdf_4.png">
