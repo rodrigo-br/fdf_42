@@ -13,7 +13,8 @@ RM		=	rm -f
 
 IFT		= -Ilibft -Llibft
 
-IMLX	= -Imlx -Lmlx -lmlx -lXext -lX11 -lm
+IMLX	= 	minilibx-linux/libmlx_Linux.a minilibx-linux/libmlx.a -lXext -lX11 -lm
+#-Imlx -Lmlx -lmlx -lXext -lX11 
 
 .c.o:
 			cc ${FLAGS} -c $< -o ${<:.c=.o} -I.
